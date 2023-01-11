@@ -5,27 +5,34 @@ const inputElt = document.querySelector("#add-text");
 const formElt = document.querySelector (".container_add") ;
 const addElement = () =>
 {
-    const liElt = document.createElement("li");
-    const iElt = document.createElement("i");
-    if (inputElt.value != "")
-    {
-        liElt.classList.add("liText");
-        ulElt.append(liElt);
-        liElt.append(inputElt.value);
-    }
+    if(inputElt.value.trim() == "") {
+        alert('Veuillez saisir une tâche');
+    } 
     else
     {
-        alert ("aucune tache n'est assigné");
+        const divElt = document.createElement("div");
+        const liElt = document.createElement("li");
+        liElt.classList.add("liText"); /*attribut une classe a li*/
+        divElt.classList.add("divteste");
+        ulElt.append(liElt); /*dans ul il y a li */
+        liElt.append(divElt); /*dans li il y a une div*/
+        divElt.append("supp") /*dans la div il y a ....*/  ; 
+        liElt.append(inputElt.value); /*dans liste il y a le value*/
+
+        divElt.addEventListener("click", supprElement) ; /*il ne peux pas le trouver si on le mets pas dans la fonction*/
     }
 
     formElt.reset();
 }
-const annule = (aa) =>
+const supprElement = (event) =>
 {
-    if (aa.key == "enter")
-    {
-    console.log ("touche");
-    }
+    event.target.parentNode.remove();
 }
 bouttonElt.addEventListener("click",addElement);
-bodyElt.addEventListener("keydown",annule);
+
+// le formulaire ne s'envoie pas en appuyant sur entrée
+inputElt.addEventListener("keypress", function(pressEnter) {
+    if (pressEnter.key === "Enter") {
+        pressEnter.preventDefault();
+    }
+});
